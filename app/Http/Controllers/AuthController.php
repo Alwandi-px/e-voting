@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -13,7 +14,7 @@ class AuthController extends Controller
         return view('auth.role');
     }
 
-    // 2. Tampilkan Form Login Sesuai Peran yang Pilih
+    // 2. Tampilkan Form Login Sesuai Peran yang Dipilih
     public function showLoginRole($role)
     {
         if (!in_array($role, ['siswa', 'guru'])) {
@@ -24,7 +25,6 @@ class AuthController extends Controller
     }
 
     // 3. Proses Login Nomor Induk (NISN / NIP)
-    // 3. Proses Login Nomor Induk (NISN / NIP)
     public function processLogin(Request $request)
     {
         $request->validate([
@@ -34,7 +34,7 @@ class AuthController extends Controller
             'nomor_induk.required' => 'Nomor Induk wajib diisi!'
         ]);
 
-        // Menggunakan LOWER() agar pencarian peran tidak sensitif huruf besar/kecil (SISWA vs siswa)
+        // Cari user yang nomor_induk DAN perannya cocok
         $user = User::where('nomor_induk', trim($request->nomor_induk))
             ->whereRaw('LOWER(peran) = ?', [strtolower($request->peran)])
             ->first();
@@ -50,16 +50,25 @@ class AuthController extends Controller
             return redirect()->back()->with('gagal', 'Anda SUDAH menggunakan hak pilih! Tidak dapat memilih kembali.');
         }
 
-        // Simpan Session
+        // --- SOLUSI BUG ENI ---
+        // 1. Bersihkan sesi lama sepenuhnya
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        // 2. Login-kan user ke Auth Guard & set session ID
+        Auth::login($user);
         session(['user_id' => $user->id]);
 
         return redirect()->route('voting.index');
     }
 
     // Logout
-    public function logout()
+    public function logout(Request $request)
     {
-        session()->forget('user_id');
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect()->route('login')->with('sukses', 'Terima kasih telah menggunakan hak pilih Anda!');
     }
 }

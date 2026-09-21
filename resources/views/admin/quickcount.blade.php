@@ -11,29 +11,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --brand-color: #15C5D2;
-            --bg-canvas: #f4f7f8;
+            --brand-color: #550000;
+            --bg-canvas: #f8f6f6;
             --card-radius: 20px;
         }
 
         body {
             background-color: var(--bg-canvas);
             font-family: 'Plus Jakarta Sans', sans-serif;
-            color: #2d3748;
+            color: #1e293b;
             min-height: 100vh;
         }
 
         .header-top {
             background-color: var(--brand-color);
             color: #ffffff;
-            padding: 22px 40px;
+            padding: 20px 40px;
             border-bottom-left-radius: 24px;
             border-bottom-right-radius: 24px;
-            box-shadow: 0 10px 25px rgba(21, 197, 210, 0.2);
+            box-shadow: 0 8px 20px rgba(85, 0, 0, 0.2);
         }
 
         .header-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
             letter-spacing: 0.5px;
             text-transform: uppercase;
@@ -68,18 +68,17 @@
         .card-paslon-result {
             background: #ffffff;
             border-radius: var(--card-radius);
-            border: 1px solid rgba(21, 197, 210, 0.2);
+            border: 1px solid rgba(85, 0, 0, 0.15);
             padding: 24px;
             margin-bottom: 20px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
         }
 
         .card-paslon-result.is-leading {
             border: 2.5px solid var(--brand-color);
-            background: linear-gradient(180deg, #ffffff 0%, #f4fdfd 100%);
+            background: linear-gradient(180deg, #ffffff 0%, #fff8f8 100%);
         }
 
         .leader-tag {
@@ -96,9 +95,9 @@
         }
 
         .paslon-avatar {
-            width: 90px;
-            height: 90px;
-            border-radius: 18px;
+            width: 85px;
+            height: 85px;
+            border-radius: 16px;
             object-fit: cover;
             border: 2px solid var(--brand-color);
         }
@@ -111,28 +110,29 @@
         }
 
         .paslon-title {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 800;
-            color: #1a202c;
+            color: #0f172a;
         }
 
         .vote-count-big {
-            font-size: 2.5rem;
+            font-size: 2.3rem;
             font-weight: 800;
             color: var(--brand-color);
             line-height: 1;
         }
 
         .progress-custom-bg {
-            background-color: #edf2f7;
-            height: 24px;
+            background-color: #e2e8f0;
+            height: 22px;
             border-radius: 50px;
             overflow: hidden;
             padding: 3px;
         }
 
+        /* Progress Bar Gradasi Maroon (#550000) + Animasi Shimmer */
         .progress-custom-fill {
-            background: linear-gradient(90deg, #15C5D2 0%, #38ef7d 100%);
+            background: linear-gradient(90deg, #550000 0%, #800000 100%);
             height: 100%;
             border-radius: 50px;
             transition: width 1.2s ease;
@@ -165,7 +165,7 @@
 
 <body>
 
-    <!-- Header Top dengan Tombol Kembali -->
+    <!-- Header Top -->
     <div class="header-top d-flex justify-content-between align-items-center mb-5">
         <div class="header-title">
             <i class="bi bi-bar-chart-line-fill me-2"></i> HASIL PEROLEHAN SUARA - PEMILOS SMKN 1 BANJAR

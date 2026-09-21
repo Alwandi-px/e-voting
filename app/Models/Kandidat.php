@@ -9,7 +9,15 @@ class Kandidat extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'nomor_urut',
+        'nama_ketua',
+        'nama_wakil',
+        'foto',
+        'visi',
+        'misi',
+        'proker', // Tambahkan ini
+    ];
 
     // Relasi: Satu Paslon Memiliki Banyak Suara (Votes)
     public function votes()

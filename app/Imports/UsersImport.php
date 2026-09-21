@@ -10,17 +10,22 @@ class UsersImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-        // Ambil nilai nomor_induk / nisn
         $nomorInduk = $row['nomor_induk'] ?? $row['nisn'] ?? null;
 
         if (empty($nomorInduk)) {
             return null;
         }
 
-        $peran = strtolower(trim($row['peran'] ?? 'siswa'));
-        if ($peran !== 'guru') {
-            $peran = 'siswa';
-        }
+        $rawPeran = strtolower(trim($row['peran'] ?? ''));
+        $kelasJabatan = strtolower(trim($row['kelas_jabatan'] ?? ''));
+
+        // Cek Siswa: mendukung angka 10, 11, 12 DAN romawi x, xi, xii, serta kata 'siswa'/'murid'
+        $isSiswa = str_contains($rawPeran, 'siswa') ||
+            str_contains($rawPeran, 'murid') ||
+            preg_match('/\b(10|11|12|x|xi|xii)\b/i', $kelasJabatan) ||
+            preg_match('/\b(10|11|12|x|xi|xii)\b/i', $rawPeran);
+
+        $peran = $isSiswa ? 'siswa' : 'guru';
 
         return User::updateOrCreate(
             ['nomor_induk' => trim($nomorInduk)],
